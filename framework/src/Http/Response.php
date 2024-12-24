@@ -7,6 +7,7 @@ class Response
     const METHOD_NOT_ALLOWED = 405;
     const ROUTE_NOT_FOUND = 404;
     const BAD_REQUEST = 400;
+    const HTTP_INTERNAL_SERVER_ERROR = 500;
 
     public function __construct(
         private ?string $content = '',

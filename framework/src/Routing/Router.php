@@ -8,21 +8,31 @@ use AurelLungu\Framework\Http\Request;
 use AurelLungu\Framework\Http\Response;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use Psr\Container\ContainerInterface;
 
 use function FastRoute\simpleDispatcher;
 
 class Router implements RouterInterface
 {
-    public function dispatch(Request $request): array
+    private array $routes = [];
+
+    public function setRoutes(array $routes): void
+    {
+        $this->routes = $routes;
+    }
+
+    public function dispatch(Request $request, ContainerInterface $container): array
     {
         $routeInfo = $this->extractRouteInfo($request);
         
         [$handler, $vars] = $routeInfo;
 
         if (is_array($handler)) {
-            [$controller, $controllerMethod] = $handler;
+            [$controllerId, $controllerMethod] = $handler;
 
-            $handler = [new $controller(), $controllerMethod];
+            $controller = $container->get($controllerId);
+
+            $handler = [$controller, $controllerMethod];
         }
 
         return [$handler, $vars];
@@ -32,9 +42,7 @@ class Router implements RouterInterface
     {
         // Create a Dispatcher
         $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
-            $routes = include BASE_PATH . '/routes/web.php';
-
-            foreach ($routes as $route) {
+            foreach ($this->routes as $route) {
                 $routeCollector->addRoute(...$route);
             }
         });

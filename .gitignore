@@ -15,3 +15,5 @@
 /vendor/
 
 /framework/vendor/
+
+.env

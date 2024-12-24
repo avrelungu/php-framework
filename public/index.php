@@ -2,7 +2,6 @@
 
 use AurelLungu\Framework\Http\Kernel;
 use AurelLungu\Framework\Http\Request;
-use AurelLungu\Framework\Routing\Router;
 
 define('BASE_PATH', dirname(__DIR__));
 
@@ -12,9 +11,8 @@ $container = require BASE_PATH . '/config/services.php';
 
 // receive request
 $request = Request::createFromGlobals();
-
 // perform some logic
-$kernel = new Kernel(new Router());
+$kernel = $container->get(Kernel::class);
 
 $response = $kernel->handle($request);
 // send response
