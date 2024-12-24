@@ -4,8 +4,91 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b5aaf18dd2530d622805ed497fa7454",
+    "content-hash": "c7a0f3de9c4e8b0560eb017198f13414",
     "packages": [
+        {
+            "name": "league/container",
+            "version": "4.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/container.git",
+                "reference": "7ea728b013b9a156c409c6f0fc3624071b742dec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/container/zipball/7ea728b013b9a156c409c6f0fc3624071b742dec",
+                "reference": "7ea728b013b9a156c409c6f0fc3624071b742dec",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/container": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "psr/container-implementation": "^1.0"
+            },
+            "replace": {
+                "orno/di": "~2.0"
+            },
+            "require-dev": {
+                "nette/php-generator": "^3.4",
+                "nikic/php-parser": "^4.10",
+                "phpstan/phpstan": "^0.12.47",
+                "phpunit/phpunit": "^8.5.17",
+                "roave/security-advisories": "dev-latest",
+                "scrutinizer/ocular": "^1.8",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev",
+                    "dev-2.x": "2.x-dev",
+                    "dev-3.x": "3.x-dev",
+                    "dev-4.x": "4.x-dev",
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Container\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Bennett",
+                    "email": "mail@philbennett.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A fast and intuitive dependency injection container.",
+            "homepage": "https://github.com/thephpleague/container",
+            "keywords": [
+                "container",
+                "dependency",
+                "di",
+                "injection",
+                "league",
+                "provider",
+                "service"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/container/issues",
+                "source": "https://github.com/thephpleague/container/tree/4.2.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/philipobenito",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-10T12:42:13+00:00"
+        },
         {
             "name": "nikic/fast-route",
             "version": "v1.3.0",
@@ -356,12 +439,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "2c52441e0a9543fe5d064310a0b84fb5c816ff4b"
+                "reference": "752cfeda8ebce1e2a6e7e026bf04d0fdf8966066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2c52441e0a9543fe5d064310a0b84fb5c816ff4b",
-                "reference": "2c52441e0a9543fe5d064310a0b84fb5c816ff4b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/752cfeda8ebce1e2a6e7e026bf04d0fdf8966066",
+                "reference": "752cfeda8ebce1e2a6e7e026bf04d0fdf8966066",
                 "shasum": ""
             },
             "require": {
@@ -426,7 +509,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-20T16:22:19+00:00"
+            "time": "2024-12-23T14:30:25+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -683,12 +766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c02b58e54985dfe2690ddf8f50032760405e1abd"
+                "reference": "9c465319b0b2de233d3bf658344ee75b33557388"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c02b58e54985dfe2690ddf8f50032760405e1abd",
-                "reference": "c02b58e54985dfe2690ddf8f50032760405e1abd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9c465319b0b2de233d3bf658344ee75b33557388",
+                "reference": "9c465319b0b2de233d3bf658344ee75b33557388",
                 "shasum": ""
             },
             "require": {
@@ -773,7 +856,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-21T05:52:01+00:00"
+            "time": "2024-12-24T06:10:43+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1655,15 +1738,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "6c1cb6eb3827aac159ca7a43d3cc39ccc066a3eb"
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6c1cb6eb3827aac159ca7a43d3cc39ccc066a3eb",
-                "reference": "6c1cb6eb3827aac159ca7a43d3cc39ccc066a3eb",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
                 "shasum": ""
             },
             "require": {
+                "ext-iconv": "*",
                 "php": ">=7.2"
             },
             "provide": {
@@ -1728,7 +1812,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-04T09:32:35+00:00"
+            "time": "2024-12-23T08:48:59+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -1867,6 +1951,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "psr/container": 20,
         "symfony/var-dumper": 20,
         "phpunit/phpunit": 20
     },
