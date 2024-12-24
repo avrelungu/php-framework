@@ -1,6 +1,7 @@
 <?php
 
 use App\Controller\HomeController;
+use AurelLungu\Framework\Controller\AbstractController;
 use AurelLungu\Framework\Http\Kernel;
 use AurelLungu\Framework\Routing\Router;
 use AurelLungu\Framework\Routing\RouterInterface;
@@ -9,6 +10,8 @@ use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use Symfony\Component\Dotenv\Dotenv;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 $dotenv = new Dotenv();
 $dotenv->load(BASE_PATH . '/.env');
@@ -22,6 +25,8 @@ $container->delegate(new ReflectionContainer(true));
 $appEnv = $_SERVER['APP_ENV'];
 $container->add('APP_ENV', new StringArgument($appEnv));
 
+$templatesPath = BASE_PATH . '/templates';
+
 $routes = include BASE_PATH . '/routes/web.php';
 
 // Services
@@ -33,5 +38,16 @@ $container->extend(RouterInterface::class)
 $container->add(Kernel::class)
     ->addArgument(RouterInterface::class)
     ->addArgument($container);
+
+$container->addShared('file-system-loader', FilesystemLoader::class)
+    ->addArgument(new StringArgument($templatesPath));
+
+$container->addShared('twig', Environment::class)
+    ->addArgument('file-system-loader');
+
+$container->add(AbstractController::class);
+
+$container->inflector(AbstractController::class)
+    ->invokeMethod('setContainer', [$container]);
 
 return $container;

@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Widget;
+use AurelLungu\Framework\Controller\AbstractController;
 use AurelLungu\Framework\Http\Response;
 
-class HomeController
+class HomeController extends AbstractController
 {
     public function __construct(private Widget $widget)
     {
@@ -13,6 +14,6 @@ class HomeController
     }
 
     public function index(): Response {
-        return new Response('avrel a facut si singur');
+        return $this->render('home.html.twig');
     }
 }
