@@ -1,10 +1,13 @@
 <?php
 
-use App\Controller\HomeController;
+use AurelLungu\Framework\Console\Application;
+use AurelLungu\Framework\Console\Kernel as ConsoleKernel;
 use AurelLungu\Framework\Controller\AbstractController;
+use AurelLungu\Framework\Dbal\ConnectionFactory;
 use AurelLungu\Framework\Http\Kernel;
 use AurelLungu\Framework\Routing\Router;
 use AurelLungu\Framework\Routing\RouterInterface;
+use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
@@ -26,6 +29,13 @@ $appEnv = $_SERVER['APP_ENV'];
 $container->add('APP_ENV', new StringArgument($appEnv));
 
 $templatesPath = BASE_PATH . '/templates';
+
+$databaseUrl = 'pdo-sqlite:///' . BASE_PATH . '/var/db.sqlite';
+
+$container->add(
+    'base-commands-namespace',
+    new \League\Container\Argument\Literal\StringArgument('AurelLungu\\Framework\\Console\\Command\\')
+);
 
 $routes = include BASE_PATH . '/routes/web.php';
 
@@ -49,5 +59,22 @@ $container->add(AbstractController::class);
 
 $container->inflector(AbstractController::class)
     ->invokeMethod('setContainer', [$container]);
+
+$container->add(ConsoleKernel::class)
+    ->addArgument($container)
+    ->addArgument(Application::class);
+
+$container->add(Application::class)
+    ->addArgument($container);
+
+// Database
+$container->add(ConnectionFactory::class)
+    ->addArgument(new StringArgument($databaseUrl));
+    
+$container->addShared(Connection::class, function () use ($container): Connection {
+    $connectionFactory = $container->get(ConnectionFactory::class);
+
+    return $connectionFactory->create();
+});
 
 return $container;

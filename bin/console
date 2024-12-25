@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+
+<?php
+
+// set a base path
+
+use AurelLungu\Framework\Console\Kernel;
+use AurelLungu\Framework\Container\Container;
+
+define('BASE_PATH', dirname(__DIR__));
+
+// require autoloading
+require BASE_PATH . '/vendor/autoload.php';
+
+// require the container
+/** @var \Psr\Container\ContainerInterface $container */
+$container = require BASE_PATH . '/config/services.php';
+
+// Get the console Kernel from the container
+/** @var AurelLungu\Framework\Console\Kernel */
+$kernel = $container->get(Kernel::class);
+
+// Call a handle method on the Kernel, return the console application status
+$status = $kernel->handle();
+
+// exit with status
+exit($status);

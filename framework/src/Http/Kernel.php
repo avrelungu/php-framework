@@ -3,7 +3,7 @@
 namespace AurelLungu\Framework\Http;
 
 use AurelLungu\Framework\Routing\RouterInterface;
-use Exception;
+use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 
 class Kernel
@@ -20,10 +20,13 @@ class Kernel
     public function handle(Request $request): Response
     {
         try {
+            dd($this->container->get(Connection::class));
+
             [$handler, $vars] = $this->router->dispatch($request, $this->container);
 
             $response = call_user_func_array($handler, $vars);
         } catch (\Throwable $exception) {
+            dd($exception);
             $response = $this->createExceptionResponse($exception);
         }
         return $response;
