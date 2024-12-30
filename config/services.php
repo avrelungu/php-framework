@@ -1,6 +1,7 @@
 <?php
 
 use AurelLungu\Framework\Console\Application;
+use AurelLungu\Framework\Console\Command\MigrateDatabase;
 use AurelLungu\Framework\Console\Kernel as ConsoleKernel;
 use AurelLungu\Framework\Controller\AbstractController;
 use AurelLungu\Framework\Dbal\ConnectionFactory;
@@ -76,5 +77,11 @@ $container->addShared(Connection::class, function () use ($container): Connectio
 
     return $connectionFactory->create();
 });
+
+$container->add(
+    'database:migrations:migrate',
+    MigrateDatabase::class
+)->addArgument(Connection::class)
+->addArgument(BASE_PATH . '/migrations/');
 
 return $container;
