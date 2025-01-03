@@ -32,7 +32,7 @@ class MigrateDatabase implements CommandInterface
             $migrationFiles = $this->getMigrationFiles();
 
             // Get the migrations to apply. i.e. they are in $migrationFiles but not in $appliedMigrations
-            $migrationToExecute = array_diff($appliedMigrations, $migrationFiles);
+            $migrationToExecute = array_diff($migrationFiles, $appliedMigrations);
 
             if (!$migrationToExecute) {
                 echo 'no migrations to execute' . PHP_EOL;
@@ -41,10 +41,23 @@ class MigrateDatabase implements CommandInterface
             }
 
             // Create SQL for any migrations which have not been run ..i.e. which are not in the database
+            $schema = new Schema();
 
-            // Add migration to database
+            foreach ($migrationToExecute as $migration) {
+                $migrationClass = require $this->migrationFilesPath . $migration;
 
+                $migrationClass->up($schema);
+
+                // Add migration to database
+                $this->insertMigration($migration);
+            }
             // Execute the SQL query
+            $sqlArray = $schema->toSql($this->connection->getDatabasePlatform());
+
+            foreach ($sqlArray as $sql) {
+                $this->connection->executeQuery($sql);
+            }
+
             $this->connection->commit();
 
             return 0;
@@ -53,6 +66,17 @@ class MigrateDatabase implements CommandInterface
 
             throw $exception;
         }
+    }
+
+    private function insertMigration(string $migration): void
+    {
+        $sql = "INSERT INTO migrations (migration) VALUES (?)";
+
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindValue(1, $migration);
+
+        $stmt->executeStatement();
     }
 
     private function getMigrationFiles(): array 
